@@ -65,6 +65,10 @@
     <script src="./Enemy.js"></script>
     <script src="./Item.js"></script>
     <script src="./Sensor.js"></script>
+    <script src="./LeftSensor.js"></script>
+    <script src="./RightSensor.js"></script>
+    <script src="./TopSensor.js"></script>
+    <script src="./BottomSensor.js"></script>
     <script>
         let lifeBox;
         let scoreBox;
@@ -108,22 +112,22 @@
         function heroX(n){
             for(let i=0;i<brickArray.length;i++){
                 
-                if(true){
-                    console.log(i+"번째 벽돌과 충돌");
-                    hero.velX=n;
-                }
+
+                hero.velX=n;
+                
             }
         }
         //주인공 y 축 이동
         function heroY(n){
             hero.velY=n;
         }
+       
         function loop(){
             
             hero.tick();
             hero.render();
             heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y;
-            
+
         }
         function init(){
             lifeBox = document.getElementById("lifeBox");
@@ -140,12 +144,40 @@
             setInterval("loop()",10);
             //주인공을 키보드로 제어
             addEventListener("keydown",function(e){
-                switch(e.keyCode){
-                    case 37: heroX(-5);break; //좌
-                    case 38: heroY(-5);break; //위
-                    case 39: heroX(5);break; //우
-                    case 40: heroY(5);break; //아래
+                if(e.keyCode==37){
+                    heroX(-5);
+
+                    
+
+
+
+                }else if(e.keyCode==38){
+                    heroY(-5);
+
+                    for(let i=0;i<brickArray.length;i++){
+                        let result = collisionCheck(hero,brickArray[i]);
+                        if(result){
+                            hero.x=brickArray[i].x+brickArray[i].width;
+                            //this.y=brickArray[i].y-this.height;
+                            //this.x=checkX;
+                            //this.y=checkY;
+                        } 
+                    }
+
+                }else if(e.keyCode==39){
+                    heroX(5);
+
+
+
+                }else if(e.keyCode==40){
+                    heroY(5);
                 }
+                // switch(e.keyCode){
+                //     case 37: heroX(-5);break; //좌
+                //     case 38: heroY(-5);break; //위
+                //     case 39: heroX(5);break; //우
+                //     case 40: heroY(5);break; //아래
+                // }
             });      
             addEventListener("keyup",function(e){
                 switch(e.keyCode){
