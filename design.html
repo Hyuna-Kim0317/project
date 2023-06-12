@@ -11,7 +11,7 @@
         #wrapper{
             width:1500px;
             height:900px;
-            background:#CCC;
+            background: brown;
             margin:auto;
             box-sizing: border-box;
             position: relative;
@@ -20,7 +20,8 @@
             width:400px;
             height:100%;
             background:wheat;
-            position:absolute;
+            position:relative;
+            float: left;
         }
 
         #lifeBox, #scoreBox, #timeBox{
@@ -39,15 +40,129 @@
             margin-top: 50px;
             margin-left: 10%;
         }
+        #playBox{
+            width:1100px;
+            height:100%;
+            background:#CCC;
+            position: relative;
+            float: left;
+        }
+        #heroInfo{
+            width:600px;
+            height:100px;
+            background:burlywood;
+            margin-left:20%;
+            font-size: 50px;
+        }
 
 
     </style>
+    <script src="./lib.js"></script>
+    <script src="./GameObject.js"></script>
+    <script src="./map.js"></script>
+    <script src="./Brick.js"></script>
+    <script src="./Hero.js"></script>
+    <script src="./Enemy.js"></script>
+    <script src="./Item.js"></script>
+    <script src="./Sensor.js"></script>
+    <script>
+        let lifeBox;
+        let scoreBox;
+        let timeBox;
+        let mapBox;
+        let playBox;
+
+
+
+
+        let mapArray=[map1,map2];
+        let level=0;
+
+        let brickArray=[];
+        let hero;
+
+        let heroInfo;
+        function createBrick(){
+            for(let a=0;a<18;a++){
+                for(let i=0;i<22;i++){
+                    if(mapArray[level][a][i]==1){
+
+                        let brick = new Brick(playBox,"./images/brick.png",50,50,50*i,50*a,0,0);
+                        brickArray.push(brick);
+                    }else if(mapArray[level][a][i]==2){
+                        hero = new Hero(playBox,"./mineworker.png",50,50,50*i,50*a,0,0);
+                    }else if(mapArray[level][a][i]==3){
+                        let enemy= new Enemy(playBox,"./images/enemy.png",50,50,50*i,50*a,0,0);                    
+                    }else if(mapArray[level][a][i]==4){
+                        let speed= new Item(playBox,"./images/speed.png",50,50,50*i,50*a,0,0);                    
+                    }else if(mapArray[level][a][i]==5){
+                        let life= new Item(playBox,"./images/life.png",50,50,50*i,50*a,0,0);                    
+                    }else if(mapArray[level][a][i]==6){
+                        let clock= new Item(playBox,"./images/clock.png",50,50,50*i,50*a,0,0);                    
+                    }   
+                }
+
+            }
+        }
+        //주인공 x 축 이동
+        function heroX(n){
+            for(let i=0;i<brickArray.length;i++){
+                
+                if(true){
+                    console.log(i+"번째 벽돌과 충돌");
+                    hero.velX=n;
+                }
+            }
+        }
+        //주인공 y 축 이동
+        function heroY(n){
+            hero.velY=n;
+        }
+        function loop(){
+            
+            hero.tick();
+            hero.render();
+            heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y;
+            
+        }
+        function init(){
+            lifeBox = document.getElementById("lifeBox");
+            scoreBox = document.getElementById("scoreBox");
+            timeBox = document.getElementById("timeBox");
+            mapBox = document.getElementById("mapBox");
+            playBox = document.getElementById("playBox");
+            heroInfo = document.getElementById("heroInfo");
+            createBrick();
+            
+        }
+        addEventListener("load",function(){
+            init();
+            setInterval("loop()",10);
+            //주인공을 키보드로 제어
+            addEventListener("keydown",function(e){
+                switch(e.keyCode){
+                    case 37: heroX(-5);break; //좌
+                    case 38: heroY(-5);break; //위
+                    case 39: heroX(5);break; //우
+                    case 40: heroY(5);break; //아래
+                }
+            });      
+            addEventListener("keyup",function(e){
+                switch(e.keyCode){
+                    case 37: heroX(0);break; //좌
+                    case 38: heroY(0);break; //위
+                    case 39: heroX(0);break; //우
+                    case 40: heroY(0);break; //아래
+                }
+            });       
+        });
+        </script>
 </head>
 <body>
     <div id="wrapper">
         <div id="side">
             <div id="lifeBox">
-
+                
             </div>
             <div id="scoreBox">
 
@@ -59,9 +174,10 @@
 
             </div>
         </div>
-        <div id="play"></div>
+        <div id="playBox"></div>
 
     </div>
+    <div id="heroInfo"></div>
     
 </body>
 </html>
