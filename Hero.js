@@ -1,12 +1,14 @@
 /* 주인공 정의*/
 class Hero extends GameObject{
- constructor(container,src,width,height,x,y,velX,velY){
+ constructor(container,src,width,height,x,y,velX,velY,herospeed){
     super(container,src,width,height,x,y,velX,velY);
 
     this.leftSensor = new LeftSensor(this.container,3,40,this.x-3,this.y+10,"red");
     this.rightSensor = new RightSensor(this.container, 3, 40, this.x+this.width, this.y+10, "red");
     this.topSensor=new TopSensor(this.container, 40, 3, this.x+5, this.y-3, "red");
     this.bottomSensor=new BottomSensor(this.container, 40, 3, this.x+5, this.y+this.height, "red");
+
+    this.herospeed=herospeed;
 
    
 }
@@ -26,18 +28,20 @@ hitCheck(){
 
             let youIndex = enemyArray.IndexOf(enemyArray[i]);
             enemyArray.splice(youIndex,1);
-            break;
             
-            lifeBox.removeChild(boxlifeArray[0]);
-            boxlifeArray.splice(0,1);
+            // lifeBox.removeChild(boxlifeArray[0]);
+            //boxlifeArray.splice(0,1);
         }
-
+        
+        break;
 
     }
     for(let i=0; i<speedArray.length;i++){
         let result= collisionCheck(this, speedArray[i]);
         if(result){ //speed 아이템과 주인공이 충골했다면
             console.log(i+"번째 speed UP");
+            //hero의 스피드 증가
+            hero.herospeed=10;
 
             //화면에서 제거
             this.container.removeChild(speedArray[i].img);
@@ -47,11 +51,83 @@ hitCheck(){
             speedArray.splice(youIndex,1);
 
 
-            this.velX=10;
            
         }
+        break;
 
     }   
+    for(let i=0; i<coinArray.length;i++){
+        let result= collisionCheck(this, coinArray[i]);
+        if(result){ //coin 아이템과 주인공이 충골했다면
+            console.log(i+"번째 coin UP");
+
+
+            //화면에서 제거
+            this.container.removeChild(coinArray[i].img);
+            //배열에서 제거할 인덱스 조사
+            let youIndex = coinArray.IndexOf(coinArray[i]);
+            //배열에서 제거
+            coinArray.splice(youIndex,1);
+
+            scorenum +=10;
+            createScore();
+
+
+           
+        }
+        break;
+    }   
+    for(let i=0; i<lifeArray.length;i++){
+        let result= collisionCheck(this, lifeArray[i]);
+        if(result){ //life 아이템과 주인공이 충골했다면
+            console.log(i+"번째 life UP");
+
+
+            //화면에서 제거
+            this.container.removeChild(lifeArray[i].img);
+            //배열에서 제거할 인덱스 조사
+            let youIndex = lifeArray.IndexOf(lifeArray[i]);
+            //배열에서 제거
+            lifeArray.splice(youIndex,1);
+
+            scorenum +=10;
+
+
+
+           
+        }
+        break;
+    }  
+    for(let i=0; i<clockArray.length;i++){
+        let result= collisionCheck(this, clockArray[i]);
+        if(result){ //clock 아이템과 주인공이 충골했다면
+            console.log(i+"번째 clock UP");
+
+
+            //화면에서 제거
+            this.container.removeChild(clockArray[i].img);
+            //배열에서 제거할 인덱스 조사
+            let youIndex = clockArray.IndexOf(clockArray[i]);
+            //배열에서 제거
+            clockArray.splice(youIndex,1);
+
+            scorenum +=10;
+
+
+
+           
+        }
+        break;
+    }  
+    
+
+
+   
+    if(collisionCheck(this,ending)){
+        console.log("엔딩");
+        this.container.removeChild(ending.img);
+        level++;
+    }
 
 
 }
