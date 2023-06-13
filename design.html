@@ -55,6 +55,7 @@
             background:skyblue;
             margin-top: 50px;
             margin-left: 10%;
+            position: relative;
         }
         #cutton{
             width:1100px;
@@ -64,11 +65,21 @@
             left:400px;
             float: right;
         }
-        #playBox{
+        #mask{
             width:1100px;
-            height:100%;
+            height:900px;
             position: relative;
             float: left;
+            background:yellow;
+            overflow: hidden;
+        }
+        #playBox{
+            width:2500px;
+            height:1500px;
+            position: absolute;
+            float: left;
+            
+            
         }
         #heroInfo{
             width:600px;
@@ -135,13 +146,17 @@
         let sec=59; //게임카운트 초
         let min=12; //게임카운트 분
 
+        //miniMap 을 위한 전역변수
+        let smallhero;
+        let smallenemyArray=[];
+
 
         let digCheck=1;
 
         let heroInfo;
         function createBrick(){
-            for(let a=0;a<18;a++){
-                for(let i=0;i<22;i++){
+            for(let a=0;a<map1.length;a++){
+                for(let i=0;i<map1[a].length;i++){
                     if(mapArray[level][a][i]==1){
 
                         let brick = new Brick(playBox,"./images/brick.png",50,50,50*i,50*a,0,0);
@@ -170,6 +185,7 @@
                     }else if(mapArray[level][a][i]==8){
                         let ending= new Item(playBox,"./images/star.png",50,50,50*i,50*a,0,0); 
                         endingArray.push(ending);
+                        //1: 벽돌, 2: 주인공, 3: 적군, 4: 스피드, 5: 라이프, 6: 시계, 7: 코인, 8: 별
 
                     }     
                 }
@@ -428,14 +444,69 @@
             }
 
         }
+        function moveMap(){
+            if(hero.y<600){
+                playBox.style.top=0+"px";
+            }
+            if(hero.y >=600){
+                playBox.style.top=-600+"px";
+            }
+            if(hero.x<1000){
+                playBox.style.left=0+"px";
+            }
+            if(hero.x>=1000 && hero.x<1600){
+                playBox.style.left=-700+"px";
+            }
+            if(hero.x>=1600){
+                playBox.style.left=-1400+"px";
+            }
+        }
+        function moveMiniMap(){
+            
+            smallhero.style.left = (hero.x/10)+"px";
+            smallhero.style.top = (hero.y/10)+"px";
+
+            
+            for(let i=0; i<enemyArray.length; i++){
+                smallenemyArray[i].style.left=(enemyArray[i].x/10)+"px";
+                smallenemyArray[i].style.top=(enemyArray[i].y/10)+"px";
+            }
+
+        }
 
         function showMiniMap(){
             //주인공의  x, y 좌표를 축소해서 보여주자 
             //  mapBox    
+            smallhero = document.createElement("div");
+            smallhero.style.width = 10+"px";
+            smallhero.style.height = 10+"px";
+            smallhero.style.background = "green";
+            smallhero.style.position="absolute";
+            smallhero.style.left=0+"px";
+            smallhero.style.top=0+"px";
+            smallhero.style.borderRadius="50px";
+            mapBox.appendChild(smallhero);
+
+            for(let i=0; i<enemyArray.length; i++){
+
+                let smallenemy = document.createElement("div");
+                smallenemy.style.width = 10+"px";
+                smallenemy.style.height = 10+"px";
+                smallenemy.style.background = "red";
+                smallenemy.style.position="absolute";
+                smallenemy.style.left=0+"px";
+                smallenemy.style.top=0+"px";
+                smallenemy.style.borderRadius="50px";
+                mapBox.appendChild(smallenemy);
+                smallenemyArray.push(smallenemy);
+            }
+            
+
         }
 
         function gameloop(){
             createEnemy();
+            
             
         }
         function timeloop(){
@@ -485,6 +556,8 @@
         }
         createSpeed();
         //nextLevel();
+        moveMiniMap();
+        moveMap();
         
         }
         function init(){
@@ -497,6 +570,7 @@
             createBrick();
             createLife();
             createScore();
+            showMiniMap();
 
         }
         addEventListener("load",function(){
@@ -582,13 +656,13 @@
 
             </div>
         </div>
+        
         <div id="mask">
-
+    
             <div id="playBox"></div>
         </div>
-
+        <div id="heroInfo"></div>
     </div>
-    <div id="heroInfo"></div>
     
 </body>
 </html>

@@ -163,12 +163,22 @@ class Hero extends GameObject {
         this.bottomSensor.tick(this);
         this.bottomSensor.render();
 
-        if (this.x >= 1050) {
-            this.x = 1050;
+        //override 를 했기 때문에 gameObject 의 tick 메서드에서 설정을 해주더라도
+        //적용이 되지 않는다.
+        //hero 와 enemy에서 각각 hero.x, enemy.x 의 범위를 설정해주어야한다.
+        if (this.x >= 2445) {
+            this.x = 2445;
         } 
         if (this.x <= 0) {
             this.x = 0;
             
+        }
+
+        if(this.y >= 1445){
+            this.y = 1445;
+        }
+        if(this.y <= 0){
+            this.y = 0;
         }
         
         this.x += this.velX;
@@ -182,9 +192,13 @@ class Hero extends GameObject {
         this.img.style.left=this.x+"px";
         this.img.style.top=this.y+"px";        
 
+        //배열에서 지운다음에 호출하면 에러가 날 수 있다.
+        //this.img의 left, top 값을 설정해준 후, 다음 메서드를 호출한다.
         this.hitCheck();
         this.hitStar();
 
-        showMiniMap();
+        //showMiniMap();
+        moveMiniMap();
+        moveMap();
     }
 }

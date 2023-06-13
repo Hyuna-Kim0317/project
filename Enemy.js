@@ -37,22 +37,45 @@ class Enemy extends GameObject{
     }
 
     tick(){
-        this.x+=this.velX;
-        this.y+=this.velY;  
-    
+        
         this.leftSensor.tick(this);
         this.leftSensor.render();
-    
+        
         this.rightSensor.tick(this);
         this.rightSensor.render();
-    
+        
         this.topSensor.tick(this);
         this.topSensor.render();
-    
+        
         this.bottomSensor.tick(this);
         this.bottomSensor.render();
+        
+        
+        if (this.x >= 2445) {
+            this.x = 2445;
+        } 
+        if (this.x <= 0) {
+            this.x = 0;
+            
+        }
+        
+        if(this.y >= 1245){
+            this.y = 1245;
+        }
+        if(this.y <= 0){
+            this.y = 0;
+        }
+        
+        this.x+=this.velX;
+        this.y+=this.velY;  
 
         this.hitCheck();
-    
+
+        
+    }
+    render(){        
+        this.img.style.left=this.x+"px";
+        this.img.style.top=this.y+"px";  
+        moveMiniMap();
     }
 }
