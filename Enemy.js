@@ -10,6 +10,27 @@ class Enemy extends GameObject{
      //  this.sensorArray=new Array(4);
     }
 
+    hitCheck(){
+        for(let i=0; i<digArray.length;i++){
+            let result= collisionCheck(this, digArray[i]);
+            if(result){
+                console.log(i+" 번째 함정과 충돌");
+                
+                
+                //화면에서 제거
+                playBox.removeChild(digArray[i].img);
+    
+                let youIndex = digArray.IndexOf(digArray[i]);
+                digArray.splice(youIndex,1);
+                
+
+            }
+            
+            break;
+    
+        }
+    }
+
     tick(){
         this.x+=this.velX;
         this.y+=this.velY;  
@@ -25,10 +46,8 @@ class Enemy extends GameObject{
     
         this.bottomSensor.tick(this);
         this.bottomSensor.render();
-    
 
-        
-    
+        this.hitCheck();
     
     }
 }

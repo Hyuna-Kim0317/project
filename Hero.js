@@ -26,10 +26,10 @@ hitCheck(){
             //화면에서 제거
             playBox.removeChild(enemyArray[i].img);
 
-            let youIndex = enemyArray.IndexOf(enemyArray[i]);
+            let youIndex = enemyArray.indexOf(enemyArray[i]);
             enemyArray.splice(youIndex,1);
             
-            // lifeBox.removeChild(boxlifeArray[0]);
+            //lifeBox.removeChild(boxlifeArray[0]);
             //boxlifeArray.splice(0,1);
         }
         
@@ -46,26 +46,31 @@ hitCheck(){
             //화면에서 제거
             this.container.removeChild(speedArray[i].img);
             //배열에서 제거할 인덱스 조사
-            let youIndex = speedArray.IndexOf(speedArray[i]);
+            let youIndex = speedArray.indexOf(speedArray[i]);
             //배열에서 제거
             speedArray.splice(youIndex,1);
 
 
            
+            break;
         }
-        break;
 
     }   
     for(let i=0; i<coinArray.length;i++){
         let result= collisionCheck(this, coinArray[i]);
+        // let a = coinArray.indexOf(coinArray[0]);
+        // playBox.removeChild(coinArray[0].img);
+        // coinArray.splice(a,1); 
+
         if(result){ //coin 아이템과 주인공이 충골했다면
             console.log(i+"번째 coin UP");
+            console.log(coinArray.length);
 
 
+            //배열에서 제거할 인덱스 조사
+            let youIndex = coinArray.indexOf(coinArray[i]);
             //화면에서 제거
             this.container.removeChild(coinArray[i].img);
-            //배열에서 제거할 인덱스 조사
-            let youIndex = coinArray.IndexOf(coinArray[i]);
             //배열에서 제거
             coinArray.splice(youIndex,1);
 
@@ -74,8 +79,8 @@ hitCheck(){
 
 
            
+            break;
         }
-        break;
     }   
     for(let i=0; i<lifeArray.length;i++){
         let result= collisionCheck(this, lifeArray[i]);
@@ -86,17 +91,18 @@ hitCheck(){
             //화면에서 제거
             this.container.removeChild(lifeArray[i].img);
             //배열에서 제거할 인덱스 조사
-            let youIndex = lifeArray.IndexOf(lifeArray[i]);
+            let youIndex = lifeArray.indexOf(lifeArray[i]);
             //배열에서 제거
             lifeArray.splice(youIndex,1);
 
-            scorenum +=10;
+            
+            
 
 
 
            
+            break;
         }
-        break;
     }  
     for(let i=0; i<clockArray.length;i++){
         let result= collisionCheck(this, clockArray[i]);
@@ -107,17 +113,17 @@ hitCheck(){
             //화면에서 제거
             this.container.removeChild(clockArray[i].img);
             //배열에서 제거할 인덱스 조사
-            let youIndex = clockArray.IndexOf(clockArray[i]);
+            let youIndex = clockArray.indexOf(clockArray[i]);
             //배열에서 제거
             clockArray.splice(youIndex,1);
 
-            scorenum +=10;
+            createTime();
 
 
 
            
+            break;
         }
-        break;
     }  
     
 
@@ -127,6 +133,8 @@ hitCheck(){
         console.log("엔딩");
         this.container.removeChild(ending.img);
         level++;
+        nextLevel();
+        
     }
 
 

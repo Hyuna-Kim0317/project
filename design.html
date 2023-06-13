@@ -87,6 +87,7 @@
     <script src="./map.js"></script>
     <script src="./Brick.js"></script>
     <script src="./Hero.js"></script>
+    <script src="./DigClass.js"></script>
     <script src="./Enemy.js"></script>
     <script src="./Item.js"></script>
     <script src="./Sensor.js"></script>
@@ -261,7 +262,7 @@
         function nextLevel(){
 
             if(level==1){
-                createBrick(); 
+                init();
             }
         }
         //주인공 x 축 이동
@@ -320,27 +321,38 @@
             }
         }
 
+        //constructor(container, src, width, height,x,y,velX,velY)
         function dig(){
-            let dig=document.createElement("img");
-            dig.style.width=50+"px";
-            dig.style.height=50+"px";
-
-            dig.style.position = "absolute";
+            // dig.style.width=50+"px";
+            // dig.style.height=50+"px";
+            
+            // dig.style.position = "absolute";
+            // if(digCheck==2){
+                
+            //     dig.style.left=hero.x-hero.width+"px";
+            // }else if(digCheck==1){
+                
+            //     dig.style.left=hero.x+hero.width+"px";
+            // }
+            
+            // dig.style.top=hero.y+"px";
+            
+            
+            // dig.src="./images/dig1.png"
+            
+            
+            // playBox.appendChild(dig);
+            // digArray.push(dig);
+            let digpoint;
             if(digCheck==2){
-
-                dig.style.left=hero.x-hero.width+"px";
+                
+                digpoint=hero.x-hero.width;
             }else if(digCheck==1){
-
-                dig.style.left=hero.x+hero.width+"px";
+                
+                digpoint=hero.x+hero.width;
             }
-            
-            dig.style.top=hero.y+"px";
-           
 
-            dig.src="./images/dig1.png"
-            
-            
-            playBox.appendChild(dig);
+            let dig=new DigClass(playBox,"./images/dig1.png",50,50,digpoint,hero.y,0,0);
             digArray.push(dig);
 
         }
@@ -434,9 +446,6 @@
                     hero.render();
                 //}
 
-                
- 
-        
 
             heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y;
             if(hitA==true){
@@ -449,6 +458,9 @@
             }else if(hitD==true){
                 hitCheckD();
             }
+
+
+
             for(let i=0;i<enemyArray.length;i++){
 
                 enemyArray[i].tick();
@@ -456,7 +468,8 @@
             }
         }
         createSpeed();
-        nextLevel();
+        //nextLevel();
+        
         }
         function init(){
             lifeBox = document.getElementById("lifeBox");
