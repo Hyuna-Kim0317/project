@@ -1,7 +1,7 @@
 class TopSensor extends Sensor{
-    tick(){
-        this.x = hero.x+5;
-        this.y = hero.y-3;
+    tick(who){
+        this.x = who.x+5;
+        this.y = who.y-3;
     }
     
 }

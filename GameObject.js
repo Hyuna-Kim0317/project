@@ -24,8 +24,11 @@ class GameObject{
     }
 
     tick(){
-        this.x+=this.velX;
-        this.y+=this.velY;        
+        if(0<this.x<1050){
+
+            this.x+=this.velX;
+        }
+            this.y+=this.velY;        
     }
 
     render(){

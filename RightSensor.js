@@ -1,6 +1,6 @@
 class RightSensor extends Sensor{
-    tick(){
-        this.x = hero.x+hero.width;
-        this.y = hero.y+10;
+    tick(who){
+        this.x = who.x+who.width;
+        this.y = who.y+10;
     }    
 }

@@ -1,6 +1,6 @@
 class LeftSensor extends Sensor{
-    tick(){
-        this.x=hero.x-3;
-        this.y=hero.y+10;
+    tick(who){
+        this.x=who.x-3;
+        this.y=who.y+10;
     }
 }
