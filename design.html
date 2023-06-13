@@ -45,6 +45,7 @@
             background:yellowgreen;
             margin-top: 50px;
             margin-left: 10%;
+            position: relative;
 
         }
 
@@ -82,6 +83,7 @@
     </style>
     <script src="./lib.js"></script>
     <script src="./GameObject.js"></script>
+    <script src="./life.js"></script>
     <script src="./map.js"></script>
     <script src="./Brick.js"></script>
     <script src="./Hero.js"></script>
@@ -99,15 +101,23 @@
         let mapBox;
         let playBox;
         let flag=true;
+        let boxlifeArray=[];
 
 
 
 
+
+       
         let mapArray=[map1,map2];
         let level=0;
 
         let brickArray=[];
         let hero;
+        let speedArray=[];
+        let lifeArray=[];
+        let clockArray=[];
+        let coinArray=[];
+
 
         let hitA=false;
         let hitB=false;
@@ -139,16 +149,50 @@
                         enemyArray.push(enemy);
 
                     }else if(mapArray[level][a][i]==4){ 
-                        let speed= new Item(playBox,"./images/speed.png",50,50,50*i,50*a,0,0);                    
+                        let speed= new Item(playBox,"./images/speed.png",50,50,50*i,50*a,0,0);  
+                        speedArray.push(speed);                  
                     }else if(mapArray[level][a][i]==5){
-                        let life= new Item(playBox,"./images/life.png",50,50,50*i,50*a,0,0);                    
+                        let life= new Item(playBox,"./images/life.png",50,50,50*i,50*a,0,0);   
+                        lifeArray.push(life);                 
                     }else if(mapArray[level][a][i]==6){
-                        let clock= new Item(playBox,"./images/clock.png",50,50,50*i,50*a,0,0);                    
+                        let clock= new Item(playBox,"./images/clock.png",50,50,50*i,50*a,0,0);   
+                        clockArray.push(clock);                 
                     }else if(mapArray[level][a][i]==7){
-                        let clock= new Item(playBox,"./images/coin.png",50,50,50*i,50*a,0,0);                    
+                        let coin= new Item(playBox,"./images/coin.png",50,50,50*i,50*a,0,0);                    
+                        coinArray.push(coin);
                     }     
                 }
 
+            }
+        }
+        function createLife(){
+            for(let i=0; i<3;i++){
+
+                let life = document.createElement("div");
+                life.innerText="♥";
+                life.style.width = 100+"px";
+                life.style.height = 100+"px";
+                
+                life.style.position = "absolute";
+                life.style.left=(100*i)+"px";
+                life.style.top=0+"px";
+
+                life.style.fontSize=70+"px";
+                
+                lifeBox.appendChild(life);
+                boxlifeArray.push(life);
+            }
+
+        }
+        function deleteLife(){
+            lifeBox.removeChild(boxlifeArray[0]);
+            boxlifeArray.splice(0,1);
+
+        }
+        function createSpeed(){
+            for(let i=0;i<speedArray.length;i++){
+                speedArray[i].tick();
+                speedArray[i].render();
             }
         }
         function createEnemy(){
@@ -182,12 +226,8 @@
         }
         //주인공 y 축 이동
         function heroY(n){
-            if(hero.y<=850){
 
                 hero.velY=n;
-            }else{
-                hero.velY=0;
-            }
         }
         function hitCheckA(){
             for(let i=0;i<brickArray.length;i++){
@@ -283,13 +323,12 @@
         
         function loop(){
             if(flag){
-            if(0<hero.x<1050){
+
 
                 hero.tick();
                 hero.render();
-            }else if(hero.x==0){
-                
-            }
+ 
+        
 
             heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y;
             if(hitA==true){
@@ -305,6 +344,7 @@
             enemyArray[0].tick();
             enemyArray[0].render();
         }
+        createSpeed();
         }
         function init(){
             lifeBox = document.getElementById("lifeBox");
@@ -314,6 +354,7 @@
             playBox = document.getElementById("playBox");
             heroInfo = document.getElementById("heroInfo");
             createBrick();
+            createLife();
 
         }
         addEventListener("load",function(){

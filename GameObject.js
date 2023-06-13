@@ -27,6 +27,8 @@ class GameObject{
         if(0<this.x<1050){
 
             this.x+=this.velX;
+        }else if(this.x<=0){    
+            this.x=0+"px";
         }
             this.y+=this.velY;        
     }
