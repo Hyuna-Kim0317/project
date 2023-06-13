@@ -16,11 +16,16 @@ class Enemy extends GameObject{
             if(result){
                 console.log(i+" 번째 함정과 충돌");
                 
-                
-                //화면에서 제거
-                playBox.removeChild(digArray[i].img);
+                //화면에서 적 제거
+                this.container.removeChild(this.img);
+
+                let myIndex = enemyArray.indexOf(this); //적 제거
+                enemyArray.splice(myIndex,1);   //적이 소속된 배열에서 제거
+
+                //화면에서 함정 제거
+                this.container.removeChild(digArray[i].img);
     
-                let youIndex = digArray.IndexOf(digArray[i]);
+                let youIndex = digArray.indexOf(digArray[i]);
                 digArray.splice(youIndex,1);
                 
 
