@@ -34,10 +34,10 @@ class Hero extends GameObject {
                 lifeBox.removeChild(boxlifeArray[n]);
                 boxlifeArray.splice(n,1);
 
+                break;
 
             }
 
-            break;
 
         }
         for (let i = 0; i < speedArray.length; i++) {
@@ -145,11 +145,17 @@ class Hero extends GameObject {
 
             if (collisionCheck(this, endingArray[i])) {
                 console.log("엔딩");
+                removeLevel();
                 this.container.removeChild(endingArray[i].img);
                 endingArray.splice(i,1);
                 level++;
-                removeLevel();
-                nextLevel();
+                if(level<mapArray.length){
+
+                    nextLevel();
+                }else{
+                    console.log("게임이 끝났습니다.");
+                    gameEnding();
+                }
                 
             }
         }

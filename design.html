@@ -60,7 +60,7 @@
         #cutton{
             width:1100px;
             height:100%;
-            background: black;
+            background: url("./images/cutton.png");
             position: absolute;
             left:400px;
             float: right;
@@ -72,6 +72,7 @@
             float: left;
             background:yellow;
             overflow: hidden;
+            
         }
         #playBox{
             width:2500px;
@@ -296,24 +297,60 @@
         }
         function removeLevel(){
             
+
+
+            let bricklength = brickArray.length;
+            for(let i=0; i<bricklength; i++){
+                playBox.removeChild(brickArray[0].img);
+                brickArray.splice(0,1);
+            }
+            let speedlength = speedArray.length;
+            for(let i=0;i<speedlength; i++){
+
+                playBox.removeChild(speedArray[0].img);
+                speedArray.splice(0,1);
+            }
+            let lifelength = lifeArray.length;
+            for(let i=0; i<lifelength; i++){
+                playBox.removeChild(lifeArray[0].img);
+                lifeArray.splice(0,1);
+            }
+            let clocklength = clockArray.length;
+            for(let i=0; i<clocklength; i++){   
+                playBox.removeChild(clockArray[0].img);
+                clockArray.splice(0,1);
+            }
+            
+            let coinlength = coinArray.length;
+            for(let i=0; i<coinlength; i++){        
+                playBox.removeChild(coinArray[0].img);
+                coinArray.splice(0,1);
+            }
+
             playBox.removeChild(hero.img);
             playBox.removeChild(hero.leftSensor.div);
             playBox.removeChild(hero.rightSensor.div);
             playBox.removeChild(hero.topSensor.div);
             playBox.removeChild(hero.bottomSensor.div);
-            for(let a=0;a<brickArray.length;a++){
-                
-                   playBox.removeChild(brickArray[a].img);
-                
+
+            let enemylength = enemyArray.length;
+            for(let i=0; i<enemylength; i++){
+                playBox.removeChild(enemyArray[0].img);
+                playBox.removeChild(enemyArray[0].leftSensor.div);
+                playBox.removeChild(enemyArray[0].rightSensor.div);
+                playBox.removeChild(enemyArray[0].topSensor.div);
+                playBox.removeChild(enemyArray[0].bottomSensor.div);
+                enemyArray.splice(0,1);
             }
+
 
         }
         function nextLevel(){
 
-
             if(level==1){
                
-                init();
+            //    init();
+                createBrick();
             }
         }
         //주인공 x 축 이동
@@ -465,11 +502,46 @@
                 
                 
                 wrapper.appendChild(div);
-                            // if(boxlifeArray.length==0){
+                // if(boxlifeArray.length==0){
                 //     gameOver();
                 // }
 
         }
+        function gameEnding(){
+            let div = document.createElement("div");
+            div.innerText = "Succeed";
+            div.style.color="white";
+            div.style.fontWeight="bold";
+            
+            div.style.fontSize=300+"px";
+            div.style.textAlign="center";
+            div.style.width=100+"%";
+            div.style.height=100+"%";
+            
+            div.style.position="absolute";
+            div.style.top=0+"px";
+            div.style.left=0+"px";
+            
+            div.style.background="black";
+
+            wrapper.appendChild(div);
+
+
+            let playagain = document.createElement("button");
+            playagain.innerText = "replay";
+            playagain.style.width=300+"px";
+            playagain.style.height=100+"px";
+            div.style.fontSize=100+"px";
+            
+            playagain.style.position="absolute";
+            playagain.style.top=1000+"px";
+            playagain.style.left=500+"px";
+            
+            
+            
+            div.appendChild(playagain);
+        }
+
         function moveMap(){
             if(hero.y<600){
                 playBox.style.top=0+"px";
@@ -692,6 +764,7 @@
     
             <div id="playBox"></div>
         </div>
+
         <div id="heroInfo"></div>
     </div>
     
