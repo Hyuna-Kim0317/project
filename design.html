@@ -155,6 +155,7 @@
 
         let bgX=0;
         let bgY=0;
+        let playagain;
 
 
         function createBrick(){
@@ -532,18 +533,20 @@
             wrapper.appendChild(div);
 
 
-            let playagain = document.createElement("button");
+            playagain = document.createElement("button");
             playagain.innerText = "replay";
             playagain.style.width=300+"px";
             playagain.style.height=100+"px";
             div.style.fontSize=100+"px";
             
             playagain.style.position="absolute";
-            playagain.style.top=1000+"px";
+            playagain.style.top=800+"px";
             playagain.style.left=500+"px";
-            
-            
-            
+
+            playagain.addEventListener("click",function(){
+                window.location.reload();
+
+            });
             div.appendChild(playagain);
         }   
 
