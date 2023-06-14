@@ -19,7 +19,7 @@
         #side{
             width:400px;
             height:100%;
-            background:wheat;
+            background:rgb(255, 189, 66);
             position:relative;
             float: left;
         }
@@ -70,7 +70,7 @@
             height:900px;
             position: relative;
             float: left;
-            background:yellow;
+            background:#D2B48C;
             overflow: hidden;
             
         }
@@ -513,6 +513,7 @@
                 // }
 
         }
+        let msg;
         function gameEnding(){
             let div = document.createElement("div");
             div.innerText = "Succeed";
@@ -532,15 +533,28 @@
 
             wrapper.appendChild(div);
 
+            msg = document.createElement("div");
+            msg.innerText="score: "+scorenum;
+            msg.style.width =600+"px";
+            msg.style.height = 300+"px";
+            msg.style.position = "absolute";
+            msg.style.left=400+"px";
+            msg.style.top=400+"px";
+            msg.style.fontSize=100+"px";
+            msg.style.textAlign="center";
+            
+
+            div.appendChild(msg);
+
 
             playagain = document.createElement("button");
             playagain.innerText = "replay";
-            playagain.style.width=300+"px";
-            playagain.style.height=100+"px";
-            div.style.fontSize=100+"px";
+            playagain.style.width=350+"px";
+            playagain.style.height=150+"px";
+            playagain.style.fontSize=100+"px";
             
             playagain.style.position="absolute";
-            playagain.style.top=800+"px";
+            playagain.style.top=700+"px";
             playagain.style.left=500+"px";
 
             playagain.addEventListener("click",function(){
