@@ -48,7 +48,7 @@ class Hero extends GameObject {
                 if(speeduplimit>0){
                     //hero의 스피드 증가
 
-                    hero.herospeed = 6;
+                    hero.herospeed = 5;
                 }
 
                 //화면에서 제거
@@ -212,6 +212,6 @@ class Hero extends GameObject {
 
         //showMiniMap();
         moveMiniMap();
-        moveMap();
+        //moveMap();
     }
 }
