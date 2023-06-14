@@ -127,6 +127,9 @@
         let hero;
         let herospeed=5;
         let speedArray=[];
+        let speeduplimit=0; //주인공이 스피드아이템을 먹은 후 효과가 지속되는 시간 카운트
+        
+       
         let lifeArray=[];
         let clockArray=[];
         let coinArray=[];
@@ -162,11 +165,11 @@
                         let brick = new Brick(playBox,"./images/brick.png",50,50,50*i,50*a,0,0);
                         brickArray.push(brick);
                     }else if(mapArray[level][a][i]==2){
-                        hero = new Hero(playBox,"./mineworker.png",50,50,50*i,50*a,0,0,3);
+                        hero = new Hero(playBox,"./mineworker.png",40,40,50*i,50*a,0,0,3);
                     }else if(mapArray[level][a][i]==3){
                        
 
-                            let enemy= new Enemy(playBox,"./images/enemy.png",50,50,50*i,50*a,0,1);  
+                            let enemy= new Enemy(playBox,"./images/enemy.png",40,40,50*i,50*a,0,1);  
                             enemyArray.push(enemy);
                         
 
@@ -193,7 +196,7 @@
             }
         }
         function createLife(){
-            for(let i=0; i<3;i++){
+            for(let i=0; i<2;i++){
 
                 let life = document.createElement("div");
                 life.innerText="♥";
@@ -206,14 +209,33 @@
 
                 life.style.fontSize=70+"px";
                 
-                lifeBox.appendChild(life);
                 boxlifeArray.push(life);
+                lifeBox.appendChild(life);
+                
             }
 
         }
         function deleteLife(){
-            lifeBox.removeChild(boxlifeArray[0]);
-            boxlifeArray.splice(0,1);
+            let n = boxlifeArray.length;
+            lifeBox.removeChild(boxlifeArray[n]);
+            boxlifeArray.splice(n,1);
+
+        }
+        function addLife(){
+            let life = document.createElement("div");
+            let n = boxlifeArray.length;
+                life.innerText="♥";
+                life.style.width = 100+"px";
+                life.style.height = 100+"px";
+                
+                life.style.position = "absolute";
+                life.style.left=(100*n)+"px";
+                life.style.top=0+"px";
+
+                life.style.fontSize=70+"px";
+                
+                boxlifeArray.push(life);
+                lifeBox.appendChild(life);
 
         }
         function createSpeed(){
@@ -406,7 +428,10 @@
                 sec--;
             }
             t_ss.value=numString(sec);
-            gameOver();
+
+            if(min==0 && sec==0){
+                gameOver();
+            }
 
             
 
@@ -421,7 +446,6 @@
         }
 
         function gameOver(){
-            if(min==0 && sec==0){
 
                 let div = document.createElement("div");
                 div.innerText = "GAME OVER";
@@ -441,7 +465,9 @@
                 
                 
                 wrapper.appendChild(div);
-            }
+                            // if(boxlifeArray.length==0){
+                //     gameOver();
+                // }
 
         }
         function moveMap(){
@@ -463,13 +489,13 @@
         }
         function moveMiniMap(){
             
-            smallhero.style.left = (hero.x/10)+"px";
-            smallhero.style.top = (hero.y/10)+"px";
+            smallhero.style.left = (hero.x/5)+"px";
+            smallhero.style.top = (hero.y/5)+"px";
 
             
             for(let i=0; i<enemyArray.length; i++){
-                smallenemyArray[i].style.left=(enemyArray[i].x/10)+"px";
-                smallenemyArray[i].style.top=(enemyArray[i].y/10)+"px";
+                smallenemyArray[i].style.left=(enemyArray[i].x/5)+"px";
+                smallenemyArray[i].style.top=(enemyArray[i].y/5)+"px";
             }
 
         }
@@ -511,11 +537,12 @@
         }
         function timeloop(){
             if(flag){
-                
-
                     setSecond();
-
-                
+            }
+            if(speeduplimit>0){
+                speeduplimit--;
+            }else{
+                hero.herospeed=3;
             }
         }
         
@@ -527,14 +554,14 @@
 
             if(flag){
                 //hero.tick 에 조건을 걸면 부딪쳤을 시 움직이지 않음
-              //  if(0<=hero.x){
+              //  if0<=hero.x){
 
                     hero.tick();
                     hero.render();
                 //}
 
 
-            heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y;
+            heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y + "   hero.vel:"+hero.herospeed +"   speedcount: " + speeduplimit;
             if(hitA==true){
                 
                 hitCheckA();
@@ -554,6 +581,10 @@
                 enemyArray[i].render();
             }
         }
+        if(boxlifeArray.length==0){
+                gameOver();
+                console.log("목숨없음");
+            }
         createSpeed();
         //nextLevel();
         moveMiniMap();

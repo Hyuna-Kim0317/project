@@ -2,15 +2,59 @@ class Enemy extends GameObject{
     constructor(container,src,width,height,x,y,velX,velY){
         super(container,src,width,height,x,y,velX,velY);
     
-        this.leftSensor = new LeftSensor(this.container,3,40,this.x-3,this.y+10,"green");
-        this.rightSensor = new RightSensor(this.container, 3, 40, this.x+this.width, this.y+10, "red");
-        this.topSensor=new TopSensor(this.container, 40, 3, this.x+5, this.y-3, "red");
-        this.bottomSensor=new BottomSensor(this.container, 40, 3, this.x+5, this.y+this.height, "red");
+        this.leftSensor = new LeftSensor(this.container,3,30,this.x-3,this.y+10,"green");
+        this.rightSensor = new RightSensor(this.container, 3, 30, this.x+this.width, this.y+10, "red");
+        this.topSensor=new TopSensor(this.container, 30, 3, this.x+5, this.y-3, "red");
+        this.bottomSensor=new BottomSensor(this.container, 30, 3, this.x+5, this.y+this.height, "red");
     
      //  this.sensorArray=new Array(4);
     }
 
+    //적의 왼쪽 센서와 벽돌의 충돌 체크
+    leftCheck(){
+        for(let i=0; i<brickArray.length;i++){
+            let result = collisionCheck(this.leftSensor, brickArray[i]);
+            if(result){
+                this.x=brickArray[i].x + brickArray[i].width+2;
+                break;
+            }
+        }
+    }
+
+    //적의 오른쪽 센서와 벽돌의 충돌 체크
+    rightCheck(){
+        for(let i=0; i<brickArray.length;i++){
+            
+            let result = collisionCheck(this.rightSensor, brickArray[i]);
+            if(result){
+                this.x=brickArray[i].x - this.width-2;
+                break;
+            }
+        }        
+    }
+    //적과 위쪽 센서와 벽돌의 충돌 체크
+    topCheck(){
+        for(let i=0; i<brickArray.length;i++){           
+            let result = collisionCheck(this.topSensor, brickArray[i]);
+            if(result){
+                this.y=brickArray[i].y + brickArray[i].height-2;
+                break;
+            }
+        }        
+    }
+
+    //적과 아래쪽 센서와 벽돌의 충돌 체크
+    bottomCheck(){
+        for(let i=0; i<brickArray.length;i++){          
+            let result = collisionCheck(this.bottomSensor, brickArray[i]);
+            if(result){
+                this.y=brickArray[i].y - this.height-2;
+                break;
+            }
+        }        
+    }
     hitCheck(){
+
         for(let i=0; i<digArray.length;i++){
             let result= collisionCheck(this, digArray[i]);
             if(result){
@@ -70,6 +114,10 @@ class Enemy extends GameObject{
         this.y+=this.velY;  
 
         this.hitCheck();
+        this.leftCheck();
+        this.rightCheck();
+        this.topCheck();
+        this.bottomCheck();
 
         
     }

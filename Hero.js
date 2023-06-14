@@ -3,10 +3,10 @@ class Hero extends GameObject {
     constructor(container, src, width, height, x, y, velX, velY, herospeed) {
         super(container, src, width, height, x, y, velX, velY);
 
-        this.leftSensor = new LeftSensor(this.container, 3, 40, this.x - 3, this.y + 10, "red");
-        this.rightSensor = new RightSensor(this.container, 3, 40, this.x + this.width, this.y + 10, "red");
-        this.topSensor = new TopSensor(this.container, 40, 3, this.x + 5, this.y - 3, "red");
-        this.bottomSensor = new BottomSensor(this.container, 40, 3, this.x + 5, this.y + this.height, "red");
+        this.leftSensor = new LeftSensor(this.container, 3, 30, this.x - 3, this.y + 10, "red");
+        this.rightSensor = new RightSensor(this.container, 3, 30, this.x + this.width, this.y + 10, "red");
+        this.topSensor = new TopSensor(this.container, 30, 3, this.x + 5, this.y - 3, "red");
+        this.bottomSensor = new BottomSensor(this.container, 30, 3, this.x + 5, this.y + this.height, "red");
 
         this.herospeed = herospeed;
 
@@ -15,8 +15,10 @@ class Hero extends GameObject {
     hitCheck() {
         for (let i = 0; i < enemyArray.length; i++) {
             let result = collisionCheck(this, enemyArray[i]);
+            let n = boxlifeArray.length-1;
             if (result) {
                 console.log(i + " 번째 적과 충돌");
+               
 
                 playBox.removeChild(enemyArray[i].leftSensor.div);
                 playBox.removeChild(enemyArray[i].rightSensor.div);
@@ -29,8 +31,10 @@ class Hero extends GameObject {
                 let youIndex = enemyArray.indexOf(enemyArray[i]);
                 enemyArray.splice(youIndex, 1);
 
-                //lifeBox.removeChild(boxlifeArray[0]);
-                //boxlifeArray.splice(0,1);
+                lifeBox.removeChild(boxlifeArray[n]);
+                boxlifeArray.splice(n,1);
+
+
             }
 
             break;
@@ -40,8 +44,12 @@ class Hero extends GameObject {
             let result = collisionCheck(this, speedArray[i]);
             if (result) { //speed 아이템과 주인공이 충골했다면
                 console.log(i + "번째 speed UP");
-                //hero의 스피드 증가
-                hero.herospeed = 10;
+                speeduplimit=10;
+                if(speeduplimit>0){
+                    //hero의 스피드 증가
+
+                    hero.herospeed = 6;
+                }
 
                 //화면에서 제거
                 this.container.removeChild(speedArray[i].img);
@@ -94,12 +102,11 @@ class Hero extends GameObject {
                 let youIndex = lifeArray.indexOf(lifeArray[i]);
                 //배열에서 제거
                 lifeArray.splice(youIndex, 1);
+                if(boxlifeArray.length<3){
 
-
-
-
-
-
+                    addLife();
+                }
+                
 
                 break;
             }
