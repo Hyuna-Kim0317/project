@@ -50,7 +50,7 @@
         }
 
         #mapBox{
-            width:80%;
+            width:320px;
             height:300px;
             background:skyblue;
             margin-top: 50px;
@@ -159,37 +159,39 @@
         let bgY=0;
         let playagain;
 
+        let nowkeycode=0;
+
 
         function createBrick(){
             for(let a=0;a<map1.length;a++){
                 for(let i=0;i<map1[a].length;i++){
                     if(mapArray[level][a][i]==1){
 
-                        let brick = new Brick(playBox,"./images/brick.png",50,50,50*i,50*a,0,0);
+                        let brick = new Brick(playBox.div,"./images/brick.png",50,50,50*i,50*a,0,0);
                         brickArray.push(brick);
                     }else if(mapArray[level][a][i]==2){
-                        hero = new Hero(playBox,"./mineworker.png",40,40,50*i,50*a,0,0,3);
+                        hero = new Hero(playBox.div,"./mineworker.png",40,40,50*i,50*a,0,0,3);
                     }else if(mapArray[level][a][i]==3){
 
                        
-                            let enemy= new Enemy(playBox,"./images/enemy.png",40,40,50*i,50*a,0,1);  
+                            let enemy= new Enemy(playBox.div,"./images/enemy.png",40,40,50*i,50*a,0,1);  
                             enemyArray.push(enemy);
                         
 
                     }else if(mapArray[level][a][i]==4){ 
-                        let speed= new Item(playBox,"./images/speed.png",50,50,50*i,50*a,0,0);  
+                        let speed= new Item(playBox.div,"./images/speed.png",50,50,50*i,50*a,0,0);  
                         speedArray.push(speed);                  
                     }else if(mapArray[level][a][i]==5){
-                        let life= new Item(playBox,"./images/life.png",50,50,50*i,50*a,0,0);   
+                        let life= new Item(playBox.div,"./images/life.png",50,50,50*i,50*a,0,0);   
                         lifeArray.push(life);                 
                     }else if(mapArray[level][a][i]==6){
-                        let clock= new Item(playBox,"./images/clock.png",50,50,50*i,50*a,0,0);   
+                        let clock= new Item(playBox.div,"./images/clock.png",50,50,50*i,50*a,0,0);   
                         clockArray.push(clock);                 
                     }else if(mapArray[level][a][i]==7){
-                        let coin= new Item(playBox,"./images/coin.png",50,50,50*i,50*a,0,0);                    
+                        let coin= new Item(playBox.div,"./images/coin.png",50,50,50*i,50*a,0,0);                    
                         coinArray.push(coin);
                     }else if(mapArray[level][a][i]==8){
-                        let ending= new Item(playBox,"./images/star.png",50,50,50*i,50*a,0,0); 
+                        let ending= new Item(playBox.div, "./images/star.png",50,50,50*i,50*a,0,0); 
                         endingArray.push(ending);
                         //1: 벽돌, 2: 주인공, 3: 적군, 4: 스피드, 5: 라이프, 6: 시계, 7: 코인, 8: 별
 
@@ -279,7 +281,7 @@
                 scoreBox.appendChild(score);
 
         }
-        function createEnemy(){
+        function moveEnemy(){
 
             for(let i=0;i<enemyArray.length;i++){
 
@@ -303,45 +305,45 @@
 
             let bricklength = brickArray.length;
             for(let i=0; i<bricklength; i++){
-                playBox.removeChild(brickArray[0].img);
+                playBox.div.removeChild(brickArray[0].img);
                 brickArray.splice(0,1);
             }
             let speedlength = speedArray.length;
             for(let i=0;i<speedlength; i++){
 
-                playBox.removeChild(speedArray[0].img);
+                playBox.div.removeChild(speedArray[0].img);
                 speedArray.splice(0,1);
             }
             let lifelength = lifeArray.length;
             for(let i=0; i<lifelength; i++){
-                playBox.removeChild(lifeArray[0].img);
+                playBox.div.removeChild(lifeArray[0].img);
                 lifeArray.splice(0,1);
             }
             let clocklength = clockArray.length;
             for(let i=0; i<clocklength; i++){   
-                playBox.removeChild(clockArray[0].img);
+                playBox.div.removeChild(clockArray[0].img);
                 clockArray.splice(0,1);
             }
             
             let coinlength = coinArray.length;
             for(let i=0; i<coinlength; i++){        
-                playBox.removeChild(coinArray[0].img);
+                playBox.div.removeChild(coinArray[0].img);
                 coinArray.splice(0,1);
             }
 
-            playBox.removeChild(hero.img);
-            playBox.removeChild(hero.leftSensor.div);
-            playBox.removeChild(hero.rightSensor.div);
-            playBox.removeChild(hero.topSensor.div);
-            playBox.removeChild(hero.bottomSensor.div);
+            playBox.div.removeChild(hero.img);
+            playBox.div.removeChild(hero.leftSensor.div);
+            playBox.div.removeChild(hero.rightSensor.div);
+            playBox.div.removeChild(hero.topSensor.div);
+            playBox.div.removeChild(hero.bottomSensor.div);
 
             let enemylength = enemyArray.length;
             for(let i=0; i<enemylength; i++){
-                playBox.removeChild(enemyArray[0].img);
-                playBox.removeChild(enemyArray[0].leftSensor.div);
-                playBox.removeChild(enemyArray[0].rightSensor.div);
-                playBox.removeChild(enemyArray[0].topSensor.div);
-                playBox.removeChild(enemyArray[0].bottomSensor.div);
+                playBox.div.removeChild(enemyArray[0].img);
+                playBox.div.removeChild(enemyArray[0].leftSensor.div);
+                playBox.div.removeChild(enemyArray[0].rightSensor.div);
+                playBox.div.removeChild(enemyArray[0].topSensor.div);
+                playBox.div.removeChild(enemyArray[0].bottomSensor.div);
                 enemyArray.splice(0,1);
             }
 
@@ -354,32 +356,41 @@
             //    init();
                 createBrick();
             }
+
+            //지도 위치 초기화
+            playBox.x=0;
+            playBox.y=0;
         }
         //주인공 x 축 이동
         function heroX(n){
             hero.velX=n;
-            //주인공의 600이상 갔을 때, bgX=-1
-            //주인공이 우측으로 움직일 때 일정 수준 이상이면 배경의 모든 object 를 왼쪽으로 이동
-            if(hero.velX>0 && hero.x > 500 && event.keyCode==39){
-                bgX=-11;
+
+        //수정 후 삭제 코드
+        //     if(playBox.x>=-1400 && playBox.y>=-600 && playBox.x<=0 && playBox.y<=0){
+                
+        //         playBox.velX = -hero.velX;
+        //         playBox.velY=-hero.velY;
+        //         console.log("조건1");
+
+        //     }
+        if(hero.x >=500 && hero.x <=2200){
+                playBox.velX = -n;
+                console.log(playBox.x);
+
             }
-            //주인공이 좌측으로 움직일 때
-            if(hero.velX<0 && hero.x <400 && event.keyCode==37){
-                bgX=11;
-            }
+            // else{
+            //     playBox.velX=0;
+            // }
+
         }
         //주인공 y 축 이동
         function heroY(n){
 
             hero.velY=n;
 
-            //hero가 아래로 움직일 때, 일정 수준 이상이면 화면의 모든 object 를 아래로 이동
-            if(hero.velY>0 && hero.y >600 && event.keyCode==40){
-                bgY=-11;
-            }
-            //hero가 위로 움직일 때, 일정 수준 이상이면 화면의 모든 object 를 아래로 이동
-            if(hero.velY<0 && hero.y <300 && event.keyCode==38){
-                bgY=11;
+            if(hero.y>=200 && hero.y<=1200){
+
+                playBox.velY = -n;
             }
         }
         function hitCheckA(){
@@ -566,24 +577,7 @@
             div.appendChild(playagain);
         }   
 
-        //맵을 한번에 이동
-        // function moveMap(){
-        //     if(hero.y<600){
-        //         playBox.style.top=0+"px"
-        //     }
-        //     if(hero.y >=600){
-        //         playBox.style.top=-600+"px";
-        //     }
-        //     if(hero.x<1000){
-        //         playBox.style.left=0+"px";
-        //     }
-        //     if(hero.x>=1000 && hero.x<1600){
-        //         playBox.style.left=-700+"px";
-        //     }
-        //     if(hero.x>=1600){
-        //         playBox.style.left=-1400+"px";
-        //     }
-        // }
+
         function moveMiniMap(){
             
             smallhero.style.left = (hero.x/5)+"px";
@@ -627,59 +621,9 @@
 
         }
 
-        //화면에 등장하는 모든 객체를 이동 
-        function translateAll(){
-
-            // 모든 벽돌 
-            for(let i=0;i<brickArray.length;i++){
-                brickArray[i].velX=bgX;
-                brickArray[i].velY=bgY;
-
-            }      
-            
-            //모든 스피드 아이템
-            for(let i=0; i<speedArray.length; i++){
-                speedArray[i].velX=bgX;
-                speedArray[i].velY=bgY;
-
-            }
-            //모든 life 아이템
-            for(let i=0; i<lifeArray.length; i++){
-                lifeArray[i].velX=bgX;
-                lifeArray[i].velY=bgY;
-
-            }
-
-            //모든 시간 아이템
-            for(let i=0; i<clockArray.length; i++){
-                clockArray[i].velX=bgX;
-                clockArray[i].velY=bgY;
-
-            }
-            //모든 코인 아이템
-            for(let i=0; i<coinArray.length; i++){
-                coinArray[i].velX=bgX;
-                coinArray[i].velY=bgY;
-
-            }
-            //모든 별 아이템
-            for(let i=0; i<endingArray.length; i++){
-                endingArray[i].velX=bgX;
-                endingArray[i].velY=bgY;
-
-            }
-            
-            //모든 적군 아이템
-            for(let i=0; i<enemyArray.length; i++){
-                enemyArray[i].velX=bgX;
-                enemyArray[i].velY=bgY;
-
-            }
-
-        }
 
         function gameloop(){
-           // createEnemy();
+            moveEnemy();
         }
 
         function timeloop(){
@@ -696,7 +640,6 @@
         
         function loop(){
 
-
             if(flag){
                 //hero.tick 에 조건을 걸면 부딪쳤을 시 움직이지 않음
               //  if0<=hero.x){
@@ -704,9 +647,10 @@
                     hero.tick();
                     hero.render();
                 //}
+                    playBox.tick();
+                    playBox.render();
 
-
-            heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y + "   hero.vel:"+hero.herospeed +"   speedcount: " + speeduplimit;
+            heroInfo.innerText="heroX: "+hero.x+"   hero.Y: "+ hero.y + "   hero.vel:"+hero.herospeed +"   speedcount: " + speeduplimit +"  playBox velX:"+playBox.velX + " playBox.velY:"+playBox.velY;
             if(hitA==true){
                 
                 hitCheckA();
@@ -726,47 +670,7 @@
                 enemyArray[i].tick();
                 enemyArray[i].render();
             }
-            //벽돌
-            for(let i=0;i<brickArray.length;i++){
-
-                brickArray[i].tick();
-                brickArray[i].render();
-            }
-
-            //스피드
-            for(let i=0;i<speedArray.length;i++){
-
-                speedArray[i].tick();
-                speedArray[i].render();
-            }
-            //라이프
-            for(let i=0;i<lifeArray.length;i++){
-
-                lifeArray[i].tick();
-                lifeArray[i].render();
-            }
-            //시계
-            for(let i=0;i<clockArray.length;i++){
-
-                clockArray[i].tick();
-                clockArray[i].render();
-            }
             
-            //코인
-            for(let i=0;i<coinArray.length;i++){
-
-                coinArray[i].tick();
-                coinArray[i].render();
-            }
-            //별
-            for(let i=0;i<endingArray.length;i++){
-
-                endingArray[i].tick();
-                endingArray[i].render();
-            }
-
-
-
         }
         if(boxlifeArray.length==0){
                 gameOver();
@@ -776,9 +680,7 @@
         //nextLevel();
         moveMiniMap();
         //moveMap();
-        if(flag){
-            translateAll();
-        }
+
     }
 
         function init(){
@@ -804,39 +706,56 @@
             //주인공을 키보드로 제어
             addEventListener("keydown",function(e){
                 if(e.keyCode==37){  //좌측
-                    heroX(-(hero.herospeed));
-                    hitA=false;
-                    hitB=false;
-                    hitC=true;
-                    hitD=false;
-                    hero.img.style.transform="scaleX(-1)";
-                    digCheck=2;
+                    //if(nowkeycode==37){
+
+                        heroX(-(hero.herospeed));
+                        hitA=false;
+                        hitB=false;
+                        hitC=true;
+                        hitD=false;
+                        hero.img.style.transform="scaleX(-1)";
+                        digCheck=2;
+                        
+                    //}
+
+                    nowkeycode = 37;
                     
                     
                 }else if(e.keyCode==38){    //상
-                    heroY(-(hero.herospeed));
-                    hitA=false;     
-                    hitB=false;
-                    hitC=false; 
-                    hitD=true;                                  
+                    //if(nowkeycode==38){
+
+                        heroY(-(hero.herospeed));
+                        hitA=false;     
+                        hitB=false;
+                        hitC=false; 
+                        hitD=true;     
+                    //}
+
+                    nowkeycode=38;                             
                     
                 }else if(e.keyCode==39){    //우측
-                    heroX(hero.herospeed);
-                    
-                    hitA=true;
-                    hitB=false;                    
-                    hitC=false;
-                    hitD=false;
-                    hero.img.style.transform="scaleX(1)";
-                    digCheck=1; 
+                    //if(nowkeycode==39){
+
+                        heroX(hero.herospeed);
+                        hitA=true;
+                        hitB=false;                    
+                        hitC=false;
+                        hitD=false;
+                        hero.img.style.transform="scaleX(1)";
+                        digCheck=1; 
+                    //}
+                    nowkeycode=39;
                     
                 }else if(e.keyCode==40){    //하
-                    heroY(hero.herospeed);
+                    //if(nowkeycode==40){
 
-                    hitA=false;
-                    hitB=true;
-                    hitC=false;
-                    hitD=false;
+                        heroY(hero.herospeed);
+                        hitA=false;
+                        hitB=true;
+                        hitC=false;
+                        hitD=false;
+                    //}
+                        nowkeycode=40;
                 }else if(e.keyCode==27){
                     flag=!flag;
                 }else if(e.keyCode==32){    //땅파면
@@ -851,10 +770,10 @@
             });      
             addEventListener("keyup",function(e){
                 switch(e.keyCode){
-                    case 37: heroX(0); bgX=0;break; //좌
-                    case 38: heroY(0); bgY=0;break; //위
-                    case 39: heroX(0); bgX=0;break; //우
-                    case 40: heroY(0); bgY=0;break; //아래
+                    case 37: heroX(0); nowkeycode=0; break; //좌
+                    case 38: heroY(0); nowkeycode=0;break; //위
+                    case 39: heroX(0); nowkeycode=0;break; //우
+                    case 40: heroY(0); nowkeycode=0;break; //아래
                 }
             });       
         });

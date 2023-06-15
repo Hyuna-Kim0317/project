@@ -16,7 +16,7 @@ class Enemy extends GameObject{
             let result = collisionCheck(this.leftSensor, brickArray[i]);
             if(result){
                 //console.log("좌측 닿음");
-                this.x=brickArray[i].x + brickArray[i].width+2;
+                this.x=brickArray[i].x + brickArray[i].width+4;
                 break;
             }
         }
@@ -29,7 +29,7 @@ class Enemy extends GameObject{
             let result = collisionCheck(this.rightSensor, brickArray[i]);
             if(result){
                 //console.log("우측 닿음");
-                this.x=brickArray[i].x - this.width-2;
+                this.x=brickArray[i].x - this.width-4;
                 break;
             }
         }        
@@ -40,7 +40,7 @@ class Enemy extends GameObject{
             let result = collisionCheck(this.topSensor, brickArray[i]);
             if(result){
                 //console.log("위쪽 닿음");
-                this.y=brickArray[i].y + brickArray[i].height-2;
+                this.y=brickArray[i].y + brickArray[i].height+4;
                 break;
             }
         }        
@@ -52,7 +52,7 @@ class Enemy extends GameObject{
             let result = collisionCheck(this.bottomSensor, brickArray[i]);
             if(result){
                 //console.log("아래쪽 닿음");
-                this.y=brickArray[i].y - this.height-2;
+                this.y=brickArray[i].y - this.height-4;
                 break;
             }
         }        
@@ -99,20 +99,20 @@ class Enemy extends GameObject{
         this.bottomSensor.render();
         
         
-        // if (this.x >= 2445) {
-        //     this.x = 2445;
-        // } 
-        // if (this.x <= 0) {
-        //     this.x = 0;
+        if (this.x >= 2445) {
+            this.x = 2445;
+        } 
+        if (this.x <= 0) {
+            this.x = 0;
             
-        // }
+        }
         
-        // if(this.y >= 1245){
-        //     this.y = 1245;
-        // }
-        // if(this.y <= 0){
-        //     this.y = 0;
-        // }
+        if(this.y >= 1245){
+            this.y = 1245;
+        }
+        if(this.y <= 0){
+            this.y = 0;
+        }
         
         this.x+=this.velX;
         this.y+=this.velY;  

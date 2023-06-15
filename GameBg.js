@@ -21,4 +21,29 @@ class GameBg{
 
         this.container.appendChild(this.div);
     }
+    tick(){
+        if (this.x <= -1400) {
+            this.x = -1400;
+        } 
+        if (this.x >= 0) {
+            this.x = 0;
+            
+        }
+
+        if(this.y <= -600){
+            this.y = -600;
+        }
+        if(this.y >= 0){
+            this.y = 0;
+        }
+
+            this.x+=this.velX;
+            this.y+=this.velY;        
+
+    }
+
+    render(){
+        this.div.style.left=this.x+"px";
+        this.div.style.top=this.y+"px";        
+    }
 }

@@ -18,24 +18,18 @@ class Hero extends GameObject {
             let n = boxlifeArray.length-1;
             if (result) {
                 console.log(i + " 번째 적과 충돌");
-               
-
-                playBox.removeChild(enemyArray[i].leftSensor.div);
-                playBox.removeChild(enemyArray[i].rightSensor.div);
-                playBox.removeChild(enemyArray[i].topSensor.div);
-                playBox.removeChild(enemyArray[i].bottomSensor.div);
+                this.container.removeChild(enemyArray[i].leftSensor.div);
+                this.container.removeChild(enemyArray[i].rightSensor.div);
+                this.container.removeChild(enemyArray[i].topSensor.div);
+                this.container.removeChild(enemyArray[i].bottomSensor.div);
 
                 //화면에서 제거
-                playBox.removeChild(enemyArray[i].img);
-
+                this.container.removeChild(enemyArray[i].img);
                 let youIndex = enemyArray.indexOf(enemyArray[i]);
                 enemyArray.splice(youIndex, 1);
-
                 lifeBox.removeChild(boxlifeArray[n]);
                 boxlifeArray.splice(n,1);
-
                 break;
-
             }
 
 
@@ -115,42 +109,29 @@ class Hero extends GameObject {
             let result = collisionCheck(this, clockArray[i]);
             if (result) { //clock 아이템과 주인공이 충골했다면
                 console.log(i + "번째 clock UP");
-
-
                 //화면에서 제거
                 this.container.removeChild(clockArray[i].img);
                 //배열에서 제거할 인덱스 조사
                 let youIndex = clockArray.indexOf(clockArray[i]);
                 //배열에서 제거
                 clockArray.splice(youIndex, 1);
-
                 createTime();
-
-
-
-
                 break;
             }
         }
-
-
-
-
-        
-        
     }
     
     hitStar(){
         for(let i=0;i<endingArray.length; i++){
-
-            if (collisionCheck(this, endingArray[i])) {
-                console.log("엔딩");
-                removeLevel();
+            let result = collisionCheck(this, endingArray[i]);
+            if (result){
+                console.log("엔딩");               
                 this.container.removeChild(endingArray[i].img);
                 endingArray.splice(i,1);
+                removeLevel();
                 level++;
                 if(level<mapArray.length){
-
+    
                     nextLevel();
                 }else{
                     console.log("게임이 끝났습니다.");
