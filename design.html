@@ -94,6 +94,7 @@
     </style>
     <script src="./lib.js"></script>
     <script src="./GameObject.js"></script>
+    <script src="./GameBg.js"></script>
     <script src="./life.js"></script>
     <script src="./map.js"></script>
     <script src="./Brick.js"></script>
@@ -111,6 +112,7 @@
         let scoreBox;
         let timeBox;
         let mapBox;
+        let mask;
         let playBox;
         let flag=true;
         let boxlifeArray=[];
@@ -168,8 +170,8 @@
                     }else if(mapArray[level][a][i]==2){
                         hero = new Hero(playBox,"./mineworker.png",40,40,50*i,50*a,0,0,3);
                     }else if(mapArray[level][a][i]==3){
-                       
 
+                       
                             let enemy= new Enemy(playBox,"./images/enemy.png",40,40,50*i,50*a,0,1);  
                             enemyArray.push(enemy);
                         
@@ -784,7 +786,8 @@
             scoreBox = document.getElementById("scoreBox");
             timeBox = document.getElementById("timeBox");
             mapBox = document.getElementById("mapBox");
-            playBox = document.getElementById("playBox");
+            mask = document.getElementById("mask");
+            playBox = new GameBg(mask, 2500, 1500, 0,0,0,0);
             heroInfo = document.getElementById("heroInfo");
             createBrick();
             createLife();
@@ -878,7 +881,7 @@
         
         <div id="mask">
     
-            <div id="playBox"></div>
+
         </div>
 
         <div id="heroInfo"></div>
