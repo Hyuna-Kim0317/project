@@ -168,8 +168,8 @@ class Hero extends GameObject {
             
         }
 
-        if(this.y >= 1445){
-            this.y = 1445;
+        if(this.y >= 1945){
+            this.y = 1945;
         }
         if(this.y <= 0){
             this.y = 0;

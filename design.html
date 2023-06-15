@@ -9,7 +9,7 @@
             margin:0px;
         }
         #wrapper{
-            width:1500px;
+            width:1550px;
             height:900px;
             margin:auto;
             box-sizing: border-box;
@@ -17,7 +17,7 @@
             background:#CCC;    
         }
         #side{
-            width:400px;
+            width:450px;
             height:100%;
             background:rgb(255, 189, 66);
             position:relative;
@@ -50,11 +50,11 @@
         }
 
         #mapBox{
-            width:320px;
-            height:300px;
+            width:382px;
+            height:307px;
             background:skyblue;
             margin-top: 50px;
-            margin-left: 10%;
+            margin-left: 9%;
             position: relative;
         }
         #cutton{
@@ -388,7 +388,7 @@
 
             hero.velY=n;
 
-            if(hero.y>=200 && hero.y<=1200){
+            if(hero.y>=200 && hero.y<=1700){
 
                 playBox.velY = -n;
             }
@@ -580,13 +580,13 @@
 
         function moveMiniMap(){
             
-            smallhero.style.left = (hero.x/5)+"px";
-            smallhero.style.top = (hero.y/5)+"px";
+            smallhero.style.left = (hero.x/6.6)+"px";
+            smallhero.style.top = (hero.y/6.6)+"px";
 
             
             for(let i=0; i<enemyArray.length; i++){
-                smallenemyArray[i].style.left=(enemyArray[i].x/5)+"px";
-                smallenemyArray[i].style.top=(enemyArray[i].y/5)+"px";
+                smallenemyArray[i].style.left=(enemyArray[i].x/6.6)+"px";
+                smallenemyArray[i].style.top=(enemyArray[i].y/6.6)+"px";
             }
 
         }

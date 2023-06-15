@@ -30,8 +30,8 @@ class GameBg{
             
         }
 
-        if(this.y <= -600){
-            this.y = -600;
+        if(this.y <= -1100){
+            this.y = -1100;
         }
         if(this.y >= 0){
             this.y = 0;

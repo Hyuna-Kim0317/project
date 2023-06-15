@@ -107,8 +107,8 @@ class Enemy extends GameObject{
             
         }
         
-        if(this.y >= 1245){
-            this.y = 1245;
+        if(this.y >= 1945){
+            this.y = 1945;
         }
         if(this.y <= 0){
             this.y = 0;
