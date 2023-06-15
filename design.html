@@ -54,7 +54,7 @@
             height:307px;
             background:skyblue;
             margin-top: 50px;
-            margin-left: 9%;
+            margin-left: 8%;
             position: relative;
         }
         #cutton{
@@ -355,11 +355,15 @@
                
             //    init();
                 createBrick();
+                //지도 위치 초기화
+                playBox.x=0;
+                playBox.y=0;
+                playBox.velX=0;
+                playBox.velY=0;
+                
+                
             }
 
-            //지도 위치 초기화
-            playBox.x=0;
-            playBox.y=0;
         }
         //주인공 x 축 이동
         function heroX(n){
